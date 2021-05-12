@@ -95,9 +95,9 @@ class Account(AcmeKeyModel):
 
 
 class Certificate(AcmeKeyModel):
-    site = models.OneToOneField('sites.Site', related_name='certificate')
+    site = models.OneToOneField('sites.Site', related_name='certificate',on_delete=models.CASCADE)
     domains_to_request = models.TextField(blank=True, help_text='Space separated list of domains to request in cert')
-    account = models.ForeignKey(Account)
+    account = models.ForeignKey(Account,on_delete=models.CASCADE)
     csr = models.TextField(blank=True)
     certificate = models.TextField(blank=True)
     intermediate_certificates = models.TextField(blank=True)
@@ -241,7 +241,7 @@ class Certificate(AcmeKeyModel):
 
 
 class Challenge(models.Model):
-    certificate = models.ForeignKey(Certificate, related_name='challenges')
+    certificate = models.ForeignKey(Certificate, related_name='challenges',on_delete=models.CASCADE)
     domain = models.CharField(max_length=255)
     path = models.CharField(max_length=255)
     validation = models.CharField(max_length=255)

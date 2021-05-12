@@ -2,11 +2,11 @@
 import logging
 from django.http import HttpResponse, Http404
 from .models import Challenge
-
+from django.utils.deprecation import MiddlewareMixin
 log = logging.getLogger(__name__)
 
 
-class AcmeChallengeMiddleware():
+class AcmeChallengeMiddleware(MiddlewareMixin):
     def process_request(self, request):
         if request.path.startswith(u'/.well-known/acme-challenge/'):
             try:
